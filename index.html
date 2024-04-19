@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: sans-serif;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      h1 {
+        color: #d9d9d9;
+      }
+      h2 {
+        color: yellow;
+      }
+      canvas {
+        display: block;
+        margin: 0 auto;
+        border-radius: 50px;
+      }
+
+      #video-wrapper {
+        visibility: hidden;
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #wrapper {
+        max-width: 650px;
+        margin: 0 auto;
+      }
+      #info {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 2rem;
+      }
+      .info-img img {
+        display: block;
+        max-width: 250px;
+        border-radius: 10px;
+        border: 3px solid #5c0000;
+        margin-bottom: 1rem;
+      }
+      .info-img img:hover {
+        box-shadow: 0px 0px 14px 4px rgba(255, 0, 0, 0.8);
+      }
+      .specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        color: #e4e4e4;
+      }
+      .specs > div {
+        padding: 0.5rem;
+      }
+      .specs > div:nth-child(2n-1) {
+        color: #bcbcbc;
+      }
+      .specs > div:nth-child(2n) {
+        background-color: #1b1b1b;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Rent a car - discover Crete</h1>
+      <canvas id="drive-canvas" width="600" height="600"></canvas>
+      <div id="info">
+        <div class="info-img">
+          <img src="ferrari-info-01.webp" />
+          <img src="ferrari-info-02.webp" />
+        </div>
+        <div>
+          <h2>1962 Ferrari 250 GTO</h2>
+          <div class="specs">
+            <div>Manufacturer</div>
+            <div>Ferrari</div>
+            <div>Class</div>
+            <div>Sports car</div>
+            <div>Body style</div>
+            <div>2-door berlinetta</div>
+            <div>Engine</div>
+            <div>V12</div>
+            <div>Transmission</div>
+            <div>5-speed manual</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="video-wrapper">
+        <video
+          controls
+          autoplay="true"
+          muted="true"
+          width="600"
+          controlslist="nodownload, nofullscreen"
+        >
+          <source src="GR.mp4#t=02:00" type="video/mp4" />
+        </video>
+        <img src="ferrari_640.png" id="car" />
+      </div>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("drive-canvas");
+      const ctx = canvas.getContext("2d");
+
+      const video = document.querySelector("video");
+      const car = document.getElementById("car");
+
+      //   console.log(video, car);
+
+      function animateScene() {
+        ctx.drawImage(video, 0, -150, canvas.width, canvas.height);
+        ctx.drawImage(car, 0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(animateScene);
+      }
+
+      video.addEventListener("play", () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        animateScene();
+      });
+    </script>
+  </body>
+</html>
